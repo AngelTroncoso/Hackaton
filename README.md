@@ -1,33 +1,42 @@
-🤠 BioTwin AI – El Consejo de PanchoteCategoría: Agentes en Vivo (Live Agent Challenge)
-Ubicación: Santiago, Chile
-Tecnología Core: Gemini 2.0 Flash 001 + Google Cloud Vertex AI + Firestore
+# Hackaton Project
 
-📝 Descripción del ProyectoBioTwin AI es un agente de salud preventivo que actúa como un "Digital Twin" del usuario. Utilizando capacidades multimodales nativas, el agente "Panchote" (un asistente con identidad rural chilena, sabio y cercano) analiza imágenes de platos de comida en tiempo real y cruza esa información con la ficha médica del paciente almacenada en Google Cloud Firestore.El ProblemaPacientes con enfermedades crónicas (diabetes, hipertensión) a menudo no saben si un plato específico es seguro para su condición en un momento dado, lo que genera ansiedad o errores en la dieta.La SoluciónPanchote identifica ingredientes, estima riesgos nutricionales y entrega un consejo personalizado con modismos chilenos, humanizando la tecnología y mejorando la adherencia al autocuidado mediante una interfaz sencilla y amigable.
+## Introduction
 
-🏗️ Arquitectura del SistemaEl proyecto está construido íntegramente sobre el ecosistema de Google Cloud:IA Multimodal: Gemini 2.0 Flash 001 (Vertex AI) para razonamiento visual y de lenguaje de baja latencia.Base de Datos: Firestore para almacenamiento de medical_history y persistencia de daily_logs.Frontend/Backend: Streamlit (Python) para una interacción rápida y fluida.Infraestructura: Docker para asegurar la portabilidad y despliegue en Google Cloud Run.🚀 Instrucciones de Inicio Rápido (Spin-up)1. Requisitos PreviosCuenta de Google Cloud con un Proyecto Activo.APIs habilitadas: Vertex AI API y Cloud Firestore API.Archivo de credenciales firebase_key.json en la raíz del proyecto.2. Instalación Local# Instalar dependencias necesarias
-pip install -r requirements.txt
+This project aims to create an engaging and interactive experience for our users. The Hackaton is designed to encourage collaboration and innovation.
 
-# Ejecutar la aplicación web
-streamlit run app.py
-3. Automatización con Docker (Puntos Extra)Para el despliegue en la nube, el proyecto incluye un Dockerfile que empaqueta la aplicación de forma reproducible:# Usamos una imagen ligera de Python 3.12
-FROM python:3.12-slim
+## Features
 
-# Directorio de trabajo
-WORKDIR /app
+- **User Authentication:** Secure login and registration processes.
+- **Interactive UI:** A user-friendly interface for easy navigation.
+- **Real-time Updates:** Instant notifications and updates for users.
 
-# Instalación de dependencias
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+## Getting Started
 
-# Copia del código fuente y credenciales
-COPY . .
+### Prerequisites
+- Ensure you have the following installed:
+  - Node.js
+  - npm
 
-# Puerto para Cloud Run
-EXPOSE 8080
+### Installing Dependencies
+```bash
+npm install
+```
 
-# Comando de inicio
-CMD ["streamlit", "run", "app.py", "--server.port=8080", "--server.address=0.0.0.0"]
-🛠️ Stack TecnológicoLenguaje: Python 3.12SDK: google-cloud-aiplatform, google-cloud-firestoreModelos: gemini-2.0-flash-001UI Framework: StreamlitDevOps: Docker, Google Cloud Run
+## Usage
 
-👨‍💻 Hallazgos y AprendizajesLatencia Multimodal: El modelo gemini-2.0-flash-001 procesa imágenes (.jpg, .png) con una velocidad asombrosa, permitiendo una experiencia "en vivo" real para el usuario.Identidad del Agente: La técnica de System Instruction permitió que Panchote mantuviera un tono culturalmente relevante (chileno), lo que genera mayor confianza y cercanía.Integración de Datos: La conexión directa con Firestore permite que el agente tenga "memoria" del estado de salud del usuario, permitiendo una personalización real sin necesidad de re-introducir datos.📹 Estructura del Video de Demostración (4 min)0:00 - 0:45: Pitch: Presentación de BioTwin AI y el impacto en la salud preventiva.0:45 - 2:30: Demo en Vivo: Interacción con la interfaz subiendo fotos de comida y respuesta de Panchote.2:30 - 3:30: Backstage Cloud: Muestra de los registros en Firestore y configuración en la consola de Google Cloud.3:30 - 4:00: Cierre: Resumen técnico, escalabilidad y visión de futuro del proyecto.Desarrollado por: Angel Troncoso
-Proyecto: BioTwin AI - Reto Gemini Live Agent 2026
+To run the project locally:
+```bash
+npm start
+```
+
+## Contributing
+
+Contributions are welcome! Please read the [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgements
+
+Thanks to everyone who contributed to this project!
