@@ -1,5 +1,6 @@
-# BioTwin AI – El Consejo de Panchote
-![](https://lh3.googleusercontent.com/gg/AMW1TPqThpi9NrkCIYVvk2_0JrjY6dVWFhdgNxpdkAv2RYlLW_-qe7PNprLwBZzXZaTNo6eDrIvKyZUBP_DlTO7BOB-wk5-HdB1euwEAdgK3hX6Byk2HiPEzQ2MmhMZ1-_sL0hBTB7x2bwIczi0dyV5bQadTMtMcCAU1WwRao7xyDsgRhlYiUTpKu3DyrCnIIgjIjrSX2kvkzPqu2U0ukqXefV9DkFZZn4OhRq-8jjJTY4HZ3RFw7AKS_tjo_3vrHYN_yhwEfTgbfuxFuEyWLn899V1VhxMBQjtvWdDhz4N2k_y1yWObM_T6ylt-cMkq59iEUP2wFHRcwKs6mwSU4ahyPxLS=s1024-rj)
+# <h1 align="center">BioTwin AI – El Consejo de Panchote</h1>
+![Panchote](https://image.lexica.art/full_webp/00007a82-c490-4a9f-9b09-038ea8163158)
+
 **Categoría:** Agentes en Vivo (Live Agent Challenge)  
 **Ubicación:** Santiago, Chile  
 **Tecnología Core:** Gemini 2.0 Flash 001 + Google Cloud Vertex AI + Firestore
