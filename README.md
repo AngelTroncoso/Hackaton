@@ -1,88 +1,33 @@
-# 🧬 BioTwin AI: El Gemelo Digital para la Medicina de Precisión
+🤠 BioTwin AI – El Consejo de PanchoteCategoría: Agentes en Vivo (Live Agent Challenge)
+Ubicación: Santiago, Chile
+Tecnología Core: Gemini 2.0 Flash 001 + Google Cloud Vertex AI + Firestore
 
-**BioTwin AI** es un ecosistema dinámico de salud que transforma el historial médico estático en un "Gemelo Digital" interactivo. No es solo un chatbot; es un agente inteligente que integra datos genéticos, biológicos y corporales para democratizar el acceso a recomendaciones médicas personalizadas.
+📝 Descripción del ProyectoBioTwin AI es un agente de salud preventivo que actúa como un "Digital Twin" del usuario. Utilizando capacidades multimodales nativas, el agente "Panchote" (un asistente con identidad rural chilena, sabio y cercano) analiza imágenes de platos de comida en tiempo real y cruza esa información con la ficha médica del paciente almacenada en Google Cloud Firestore.El ProblemaPacientes con enfermedades crónicas (diabetes, hipertensión) a menudo no saben si un plato específico es seguro para su condición en un momento dado, lo que genera ansiedad o errores en la dieta.La SoluciónPanchote identifica ingredientes, estima riesgos nutricionales y entrega un consejo personalizado con modismos chilenos, humanizando la tecnología y mejorando la adherencia al autocuidado mediante una interfaz sencilla y amigable.
 
----
+🏗️ Arquitectura del SistemaEl proyecto está construido íntegramente sobre el ecosistema de Google Cloud:IA Multimodal: Gemini 2.0 Flash 001 (Vertex AI) para razonamiento visual y de lenguaje de baja latencia.Base de Datos: Firestore para almacenamiento de medical_history y persistencia de daily_logs.Frontend/Backend: Streamlit (Python) para una interacción rápida y fluida.Infraestructura: Docker para asegurar la portabilidad y despliegue en Google Cloud Run.🚀 Instrucciones de Inicio Rápido (Spin-up)1. Requisitos PreviosCuenta de Google Cloud con un Proyecto Activo.APIs habilitadas: Vertex AI API y Cloud Firestore API.Archivo de credenciales firebase_key.json en la raíz del proyecto.2. Instalación Local# Instalar dependencias necesarias
+pip install -r requirements.txt
 
-## 💡 Inspiración
-La inspiración nació de visualizar un futuro donde el historial médico no sea un archivo muerto, sino un ecosistema vivo. BioTwin AI busca ser el puente hacia la medicina de precisión, permitiendo que cada paciente tenga un reflejo virtual de su salud que evoluciona en tiempo real, basándose en su individualidad biológica única.
+# Ejecutar la aplicación web
+streamlit run app.py
+3. Automatización con Docker (Puntos Extra)Para el despliegue en la nube, el proyecto incluye un Dockerfile que empaqueta la aplicación de forma reproducible:# Usamos una imagen ligera de Python 3.12
+FROM python:3.12-slim
 
-## 🚀 ¿Qué hace?
-* **Integración Multimodal:** Consolida exámenes, tratamientos y antecedentes históricos en una única línea de tiempo.
-* **Análisis con Modelos de Salud:** Utiliza la potencia de **Gemini** y modelos especializados para identificar patrones biológicos que pasan desapercibidos.
-* **Predicción y Recomendación:** Genera proyecciones de salud futuras y sugiere ajustes en tratamientos, siempre bajo un enfoque de validación profesional médica.
-* **Interfaz de Acompañamiento:** Implementa a "Panchote", una capa de empatía basada en lenguaje natural que traduce la complejidad técnica en consejos cercanos y comprensibles con un tono cálido y regional.
+# Directorio de trabajo
+WORKDIR /app
 
----
+# Instalación de dependencias
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-## 🛠️ Stack Tecnológico
-* **Core AI:** Google Gemini 2.5/3.1 (via `google-genai`) para razonamiento clínico avanzado.
-* **Backend & Memoria:** **Supabase** (PostgreSQL) para la persistencia del estado del Gemelo Digital.
-* **Lenguaje:** Python 3.12.
-* **Metodología:** Vibe Coding & Agentic Workflow.
+# Copia del código fuente y credenciales
+COPY . .
 
----
+# Puerto para Cloud Run
+EXPOSE 8080
 
-## 🏗️ Arquitectura del Agente
-El sistema opera bajo un flujo de **Recuperación-Generación-Almacenamiento**:
+# Comando de inicio
+CMD ["streamlit", "run", "app.py", "--server.port=8080", "--server.address=0.0.0.0"]
+🛠️ Stack TecnológicoLenguaje: Python 3.12SDK: google-cloud-aiplatform, google-cloud-firestoreModelos: gemini-2.0-flash-001UI Framework: StreamlitDevOps: Docker, Google Cloud Run
 
-1.  **Context Retrieval:** El motor consulta en Supabase el último resumen histórico del paciente mediante su `patient_id`.
-2.  **Prompt Engineering:** Se construye un prompt dinámico que combina el historial ("Memoria") con los nuevos biomarcadores.
-3.  **Inference:** Gemini procesa la información manteniendo la personalidad de "Panchote" y la precisión del Gemelo Digital.
-4.  **Memory Update:** El nuevo resumen generado se almacena automáticamente para dar continuidad evolutiva a la salud del paciente.
-
----
-
-### ☁️ Google Cloud Integration (Firebase)
-Para cumplir con los estándares de escalabilidad y hosting exigidos, **BioTwin AI** utiliza:
-* **Firebase Hosting:** Para el despliegue de la interfaz multimodal.
-* **Cloud Functions (GCP):** Para orquestar la lógica de negocio y la conexión con Supabase.
-* **Vertex AI Firebase SDK:** Para la implementación de la API Gemini Live, permitiendo interacciones de voz y visión en tiempo real con latencia mínima.
----
-
-## 🕹️ Guía de Ejecución (Demo en Vivo)
-
-Para validar la arquitectura de **BioTwin AI** y su capacidad de memoria persistente, sigue estos pasos:
----
-
-### 1. Preparación del Entorno
-Instala las dependencias necesarias:
-```bash
-python3 -m pip install google-genai supabase python-dotenv
----
-
-### 2. Configuración de Variables (.env)
-Para que el motor pueda auditar la base de datos y conectar con la IA, asegúrate de tener tus llaves configuradas en el archivo `.env`:
-
-```env
-GOOGLE_API_KEY="tu_api_key_de_google"
-SUPABASE_URL="[https://tu-proyecto.supabase.co](https://tu-proyecto.supabase.co)"
-SUPABASE_KEY="tu-anon-key-de-supabase"
-
----
-
-### 3. Ejecución de la Prueba
-Lanza el script de prueba para iniciar la interacción con el Gemelo Digital:
-python3 test_panchote.py
----
-
-### Qué observar en la Demo
-Interacción Inicial: El sistema detectará que no hay historial previo y generará un perfil clínico base desde cero.
-
-Persistencia: Verás en tiempo real la creación del registro en la tabla medical_history de Supabase.
-
-Continuidad (Memoria): Al ejecutar el comando por segunda vez, el agente recuperará el contexto anterior, demostrando que BioTwin AI reconoce la evolución del paciente y ajusta sus consejos dinámicamente.
----
-
-### Desafíos Superados & Logros
-Equilibrio Técnico-Humano: Logramos integrar la precisión de un Gemelo Digital con la calidez de un acompañante de salud regional.
-
-Optimización de Tokens: Implementamos el uso de resúmenes contextuales en lugar de historiales densos, garantizando rapidez y bajo costo operativo.
-
-Trazabilidad de Datos: Arquitectura diseñada bajo estándares de auditoría clínica profesional, permitiendo un seguimiento real y seguro de la salud del paciente.
----
-
-👨‍💻 Autor
-Angel Troncoso Contador Auditor | Ingeniero Comercial | Desarrollador de Ecosistemas IA
-
-Este proyecto fue desarrollado para el Gemini Live Agent Challenge 2026.
+👨‍💻 Hallazgos y AprendizajesLatencia Multimodal: El modelo gemini-2.0-flash-001 procesa imágenes (.jpg, .png) con una velocidad asombrosa, permitiendo una experiencia "en vivo" real para el usuario.Identidad del Agente: La técnica de System Instruction permitió que Panchote mantuviera un tono culturalmente relevante (chileno), lo que genera mayor confianza y cercanía.Integración de Datos: La conexión directa con Firestore permite que el agente tenga "memoria" del estado de salud del usuario, permitiendo una personalización real sin necesidad de re-introducir datos.📹 Estructura del Video de Demostración (4 min)0:00 - 0:45: Pitch: Presentación de BioTwin AI y el impacto en la salud preventiva.0:45 - 2:30: Demo en Vivo: Interacción con la interfaz subiendo fotos de comida y respuesta de Panchote.2:30 - 3:30: Backstage Cloud: Muestra de los registros en Firestore y configuración en la consola de Google Cloud.3:30 - 4:00: Cierre: Resumen técnico, escalabilidad y visión de futuro del proyecto.Desarrollado por: Angel Troncoso
+Proyecto: BioTwin AI - Reto Gemini Live Agent 2026
