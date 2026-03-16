@@ -15,4 +15,4 @@ COPY . .
 EXPOSE 8080
 
 # Comando para ejecutar la app (el flag de server port es vital para Cloud Run)
-CMD ["streamlit", "run", "app.py", "--server.port=8080", "--server.address=0.0.0.0"]
+CMD ["streamlit", "run", "core/app.py", "--server.port=8080", "--server.address=0.0.0.0"]

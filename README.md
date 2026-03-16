@@ -1,115 +1,136 @@
-# <h1 align="center">BioTwin AI – El Consejo de Panchote</h1>
+# <h1 align="center">Panchote Multimodal</h1>
 ![Panchote](https://image.lexica.art/full_webp/00007a82-c490-4a9f-9b09-038ea8163158)
 
-**Categoría:** Agentes en Vivo (Live Agent Challenge)  
-**Ubicación:** Santiago, Chile  
-**Tecnología Core:** Gemini 2.0 Flash 001 + Google Cloud Vertex AI + Firestore
+**Categoria:** Agentes en Vivo  
+**Ubicacion:** Santiago, Chile  
+**Tecnologia Core:** Gemini en Vertex AI + Firestore + ElevenLabs + Streamlit
 
 ---
 
-## 📝 Descripción del Proyecto
+## Descripcion del Proyecto
 
-BioTwin AI es un agente de salud preventivo que actúa como un "Digital Twin" del usuario. Utilizando capacidades multimodales nativas, el agente "Panchote" (un asistente con identidad rural chilena, sabio y cercano) analiza imágenes de platos de comida en tiempo real y cruza esa información con la ficha médica del paciente almacenada en Google Cloud Firestore.
+**Panchote Multimodal** es una experiencia de salud conversacional creada para hackathon. Combina voz, imagen y contexto clinico basico para entregar recomendaciones breves, cercanas y comprensibles sobre alimentos cotidianos.
 
-### El Problema
+La aplicacion usa a **Panchote**, un lobo marino sabio de Puerto Montt, como interfaz empatica para traducir senales de salud en consejos simples con tono local. El foco no es reemplazar criterio medico, sino demostrar una forma mas humana, accesible y memorable de interactuar con IA multimodal.
 
-Pacientes con enfermedades crónicas (diabetes, hipertensión) a menudo no saben si un plato específico es seguro para su condición en un momento dado, lo que genera ansiedad o errores en la dieta.
+## El Problema
 
-### La Solución
+Pacientes con condiciones cronicas como diabetes o hipertension muchas veces no tienen una forma simple e inmediata de validar si una comida cotidiana es compatible con su estado de salud. Eso genera dudas, ansiedad y errores evitables en la alimentacion.
 
-Panchote identifica ingredientes, estima riesgos nutricionales y entrega un consejo personalizado con modismos chilenos, humanizando la tecnología y mejorando la adherencia al autocuidado mediante una interfaz sencilla y amigable.
+## La Solucion
 
----
+Panchote recibe una consulta por voz o una imagen del plato, cruza esa informacion con biomarcadores del paciente almacenados en Firestore y genera una recomendacion corta usando Gemini. Si ElevenLabs esta configurado, la respuesta tambien se reproduce con voz personalizada.
 
-## 🏗️ Arquitectura del Sistema
+## Que Hace
 
-El proyecto está construido íntegramente sobre el ecosistema de Google Cloud:
+- Recibe una consulta por voz desde Streamlit.
+- Recibe una foto del plato por camara o carga manual.
+- Recupera datos de salud base desde Firestore.
+- Consulta un modelo multimodal de Gemini en Vertex AI.
+- Responde en texto breve y, si ElevenLabs esta configurado, tambien en voz.
+- Incluye un panel de diagnostico para validar la integracion de TTS en vivo.
 
-- **IA Multimodal:** Gemini 2.0 Flash 001 (Vertex AI) para razonamiento visual y de lenguaje de baja latencia
-- **Base de Datos:** Firestore para almacenamiento de medical_history y persistencia de daily_logs
-- **Frontend/Backend:** Streamlit (Python) para una interacción rápida y fluida
-- **Infraestructura:** Docker para asegurar la portabilidad y despliegue en Google Cloud Run
+## Demo Flow
 
----
+1. El usuario graba audio o sube una imagen de su comida.
+2. Panchote incorpora glucosa y presion del paciente desde Firestore.
+3. Gemini analiza el contexto y entrega una recomendacion corta.
+4. ElevenLabs convierte la respuesta a audio con una voz personalizada.
+5. La interfaz muestra texto, imagen capturada y estado tecnico del sistema.
 
-## 🚀 Instrucciones de Inicio Rápido (Spin-up)
+## Arquitectura del Sistema
 
-### 1. Requisitos Previos
+- **Frontend/App:** Streamlit
+- **Modelo multimodal:** Google Gemini via `google-genai`
+- **Plataforma de inferencia:** Vertex AI
+- **Memoria de salud:** Google Cloud Firestore
+- **Sintesis de voz:** ElevenLabs
+- **Lenguaje:** Python 3.12
+- **Contenerizacion:** Docker
 
-- Cuenta de Google Cloud con un Proyecto Activo
-- APIs habilitadas: Vertex AI API y Cloud Firestore API
-- Archivo de credenciales `firebase_key.json` en la raíz del proyecto
+## Arquitectura de Flujo
 
-### 2. Instalación Local
+1. **Input multimodal**  
+   Streamlit recibe audio e imagen del usuario.
+
+2. **Contexto clinico**  
+   La app consulta Firestore para recuperar biomarcadores basicos del paciente.
+
+3. **Razonamiento**  
+   Gemini genera una respuesta breve, contextual y con personalidad.
+
+4. **Voz**  
+   ElevenLabs sintetiza la salida con una voz configurada por `voice_id`.
+
+5. **Observabilidad**  
+   La app muestra errores de TTS y un bloque de diagnostico para la demo.
+
+## Estructura Relevante
+
+- `core/app.py`: app principal de Streamlit
+- `Dockerfile`: contenedor listo para ejecutar `core/app.py`
+- `requirements.txt`: dependencias del proyecto
+- `.env`: variables de entorno locales
+
+## Variables de Entorno
+
+Configura un archivo `.env` con valores como estos:
+
+```env
+PROJECT_ID=multiagentes-479321
+LOCATION=us-west1
+MODEL_ID=gemini-2.5-flash
+ELEVEN_LABS_API_KEY=tu_api_key
+ELEVEN_VOICE_ID=tu_voice_id
+```
+
+Notas:
+
+- `MODEL_ID` debe corresponder a un modelo habilitado en Vertex AI para tu proyecto y region.
+- `ELEVEN_VOICE_ID` debe ser una voz valida y permitida por tu cuenta de ElevenLabs.
+- Firestore y Vertex AI requieren credenciales correctamente disponibles en el entorno.
+
+## Ejecucion Local
+
+Instala dependencias:
 
 ```bash
-# Instalar dependencias necesarias
-pip install -r requirements.txt
-
-# Ejecutar la aplicación web
-streamlit run app.py
+python3 -m pip install -r requirements.txt
 ```
 
-### 3. Automatización con Docker (Puntos Extra)
+Levanta la app:
 
-Para el despliegue en la nube, el proyecto incluye un Dockerfile que empaqueta la aplicación de forma reproducible:
-
-```dockerfile
-# Usamos una imagen ligera de Python 3.12
-FROM python:3.12-slim
-
-# Directorio de trabajo
-WORKDIR /app
-
-# Instalación de dependencias
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copia del código fuente y credenciales
-COPY . .
-
-# Puerto para Cloud Run
-EXPOSE 8080
-
-# Comando de inicio
-CMD ["streamlit", "run", "app.py", "--server.port=8080", "--server.address=0.0.0.0"]
+```bash
+streamlit run core/app.py
 ```
 
----
+## Despliegue
 
-## 🛠️ Stack Tecnológico
+El proyecto esta preparado para contenedorizarse con Docker. El `Dockerfile` arranca correctamente la app desde `core/app.py`, alineado con la estructura actual del repositorio.
 
-- **Lenguaje:** Python 3.12
-- **SDK:** google-cloud-aiplatform, google-cloud-firestore
-- **Modelos:** gemini-2.0-flash-001
-- **UI Framework:** Streamlit
-- **DevOps:** Docker, Google Cloud Run
+## Logros Tecnicos de la Demo
 
----
+- Integracion real entre Streamlit, Vertex AI, Firestore y ElevenLabs.
+- Correccion de un modelo retirado de Gemini hacia una version vigente y configurable.
+- Estabilizacion del flujo de captura de imagen con respaldo por carga manual.
+- Diagnostico visible de TTS para aislar errores de voz, credenciales o plan.
+- Voz personalizada de Panchote validada con ElevenLabs.
 
-## 👨‍💻 Hallazgos y Aprendizajes
+## Hallazgos y Aprendizajes
 
-### Latencia Multimodal
-El modelo gemini-2.0-flash-001 procesa imágenes (.jpg, .png) con una velocidad asombrosa, permitiendo una experiencia "en vivo" real para el usuario.
+- La multimodalidad mejora mucho la experiencia cuando se combina con contexto clinico simple y lenguaje cercano.
+- La observabilidad en demo importa tanto como la funcionalidad: el diagnostico de TTS permitio aislar rapido errores de `voice_id` y restricciones de plan.
+- Una personalidad local bien definida aumenta cercania sin sacrificar claridad tecnica.
 
-### Identidad del Agente
-La técnica de System Instruction permitió que Panchote mantuviera un tono culturalmente relevante (chileno), lo que genera mayor confianza y cercanía.
+## Consideraciones
 
-### Integración de Datos
-La conexión directa con Firestore permite que el agente tenga "memoria" del estado de salud del usuario, permitiendo una personalización real sin necesidad de re-introducir datos.
+- Esta demo esta orientada a evaluacion de hackathon y validacion tecnica de producto.
+- Las respuestas son de apoyo y no sustituyen evaluacion medica profesional.
+- El tono cercano de Panchote es intencional: busca hacer la IA mas accesible y humana.
 
----
+## Autor
 
-## 📹 Estructura del Video de Demostración (4 min)
+**Angel Troncoso**  
+Contador Auditor | Ingeniero Comercial | Desarrollador de Ecosistemas IA
 
-- **0:00 - 0:45:** Pitch - Presentación de BioTwin AI y el impacto en la salud preventiva
-- **0:45 - 2:30:** Demo en Vivo - Interacción con la interfaz subiendo fotos de comida y respuesta de Panchote
-- **2:30 - 3:30:** Backstage Cloud - Muestra de los registros en Firestore y configuración en la consola de Google Cloud
-- **3:30 - 4:00:** Cierre - Resumen técnico, escalabilidad y visión de futuro del proyecto
-
----
-
-## 📋 Información del Proyecto
-
-**Desarrollado por:** Angel Troncoso  
-**Proyecto:** BioTwin AI - Reto Gemini Live Agent 2026
+Proyecto desarrollado para presentacion de hackathon con enfoque en IA multimodal aplicada a salud y experiencia de usuario.
