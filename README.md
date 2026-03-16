@@ -108,6 +108,23 @@ streamlit run core/app.py
 
 El proyecto esta preparado para contenedorizarse con Docker. El `Dockerfile` arranca correctamente la app desde `core/app.py`, alineado con la estructura actual del repositorio.
 
+## Evidencia de Google Cloud
+
+Para cumplir con el requerimiento de validacion en GCP, este proyecto puede presentar:
+
+- **URL de despliegue en Google Cloud:** `https://TU-URL-DE-CLOUD-RUN.a.run.app`
+- **Evidencia en codigo del uso de servicios de Google Cloud:** `core/app.py`
+
+Fragmento clave:
+
+```python
+client = genai.Client(vertexai=True, project=PROJECT_ID, location=LOCATION)
+db = firestore.Client(project=PROJECT_ID)
+response = client.models.generate_content(model=MODEL_ID, contents=contents)
+```
+
+Este flujo demuestra uso directo de **Vertex AI** y **Cloud Firestore** desde la aplicacion.
+
 ## Logros Tecnicos de la Demo
 
 - Integracion real entre Streamlit, Vertex AI, Firestore y ElevenLabs.
