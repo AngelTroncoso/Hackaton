@@ -3,3 +3,6 @@ google-cloud-firestore
 google-cloud-aiplatform
 pillow
 vertexai
+google-genai
+python-dotenv
+elevenlabs
